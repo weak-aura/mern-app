@@ -1,7 +1,7 @@
 ﻿const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "gmail.com",
   port: 587,
   secure: false, // true for port 465, false for other ports
   auth: {
@@ -102,6 +102,7 @@ const sendMail = async (email, code) => {
                     font-size: 15px;
                   }
                   .code-block {
+                    color: #000000;
                     font-size: 20px;
                     padding: 12px 20px;
                   }
