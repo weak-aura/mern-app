@@ -1,0 +1,1 @@
+﻿export {OnePost} from "./ui/OnePost.tsx";

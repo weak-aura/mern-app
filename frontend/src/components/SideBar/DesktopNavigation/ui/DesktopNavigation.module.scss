@@ -1,0 +1,11 @@
+﻿
+.rigid_border_top {
+  @apply absolute content-[""] top-[-32px] right-[0] bg-[--sidebar-bg] w-[32px] h-[32px] rounded-br-[32px];
+  box-shadow: 7px 8px 0 7px var(--primary-bg);
+}
+
+.rigid_border_bottom {
+  @apply absolute content-[""] bottom-[-32px] right-[0] bg-[--sidebar-bg] w-[32px] h-[32px] rounded-tr-[32px];
+  box-shadow: 7px -8px 0 7px var(--primary-bg);
+}
+

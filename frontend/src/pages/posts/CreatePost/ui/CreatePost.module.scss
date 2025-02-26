@@ -1,0 +1,22 @@
+﻿.label {
+  @apply block mt-3 mb-0.5 text-sm font-medium text-gray-900 dark:text-white;
+}
+.input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.input_file_body {
+  @apply bg-white text-[#333] flex items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-1 min-w-[300px] font-[sans-serif] rounded-md overflow-hidden;
+}
+
+.file_name_body {
+  @apply px-2 flex items-center gap-3 flex-1 truncate;
+}
+
+.file_name {
+  @apply max-w-[530px] text-sm overflow-hidden overflow-ellipsis text-nowrap ;
+}
+
+.input_file_label {
+  @apply bg-gray-800 hover:bg-gray-700 text-white text-sm px-3 py-2.5 outline-none rounded-md cursor-pointer block;
+}
