@@ -11,18 +11,13 @@ const {postRoutes} = require("../routes/post.routes");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-let MODE;
-if(process.env.NODE_MODE === "production"){
-  MODE = process.env.CORS_MODE_PRODUCTION
-}else{
-  MODE = process.env.CORS_MODE_DEVELOPMENT
-}
+const CORS_MODE = process.env.CORS_MODE_PRODUCTION ? process.env.CORS_MODE_PRODUCTION : process.env.CORS_MODE_PRODUCTION;
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-  origin: MODE, 
+  origin: CORS_MODE, 
   credentials: true,
 }));
 
