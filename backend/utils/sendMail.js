@@ -16,7 +16,13 @@ const sendMail = async (email, code) => {
       from: process.env.TRANSPORTER_USER, // sender address
       to: email, // list of receivers
       subject: "Подтверждение регистрации", // Subject line
-      html: `<div>{code}</div>`, // html body
+      html: `
+       <div>
+        <p>Здравствуйте!</p>
+        <p>Ваш код подтверждения регистрации: <strong>${code}</strong></p>
+        <p>Пожалуйста, используйте этот код для завершения регистрации.</p>
+       </div>
+      `, // html body
     });
   }catch (error) {
     console.log("Error in sendMail 'nodemailer': ", error.message)
