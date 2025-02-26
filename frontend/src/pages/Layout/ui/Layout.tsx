@@ -7,7 +7,7 @@ export const Layout = () => {
   
   return (
     <>
-      <div className="hidden sm:flex">
+      <div className="hidden sm:flex mt-5">
         <SideBar/>
         <div className="px-6 flex-1">
           <Outlet/>

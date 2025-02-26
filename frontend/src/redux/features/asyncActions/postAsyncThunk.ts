@@ -1,6 +1,12 @@
 ﻿import {createAsyncThunk} from "@reduxjs/toolkit";
 
-const API_URL = import.meta.env.VITE_DOMAIN_SERVER_URL
+let API_URL;
+
+if (import.meta.env.MODE === 'production') {
+  API_URL = import.meta.env.VITE_PRODUCTION_MODE;
+} else {
+  API_URL = import.meta.env.VITE_DEVELOPMENT_MODE;
+}
 
 export const createPostAsyncThunk = createAsyncThunk("createPostAsyncThunk",
   async (payload: FormData) => {
