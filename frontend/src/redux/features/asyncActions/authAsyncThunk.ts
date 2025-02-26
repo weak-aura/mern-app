@@ -1,12 +1,6 @@
 ﻿import {createAsyncThunk} from "@reduxjs/toolkit";
 
-let API_URL;
-
-if (import.meta.env.VITE_MODE === 'production') {
-  API_URL = import.meta.env.VITE_PRODUCTION_MODE;
-} else {
-  API_URL = import.meta.env.VITE_DEVELOPMENT_MODE;
-}
+const API_URL = import.meta.env.VITE_PRODUCTION_MODE
 
 interface UserDataTypes {
   email?: string | undefined
