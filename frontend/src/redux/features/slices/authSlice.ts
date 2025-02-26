@@ -44,10 +44,10 @@ const authSlice = createSlice({
       })
       .addCase(getMeAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.message = action.payload?.message
-        state.status = action.payload?.status
-        state.error = action.payload?.error
-        state.user = action.payload?.user
+        state.message = action.payload.message
+        state.status = action.payload.status
+        state.error = action.payload.error
+        state.user = action.payload.user
       })
       .addCase(getMeAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -59,10 +59,10 @@ const authSlice = createSlice({
       })
       .addCase(loginAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.status = action.payload?.status
-        state.message = action.payload?.message
-        state.error = action.payload?.error
-        state.user = action.payload?.user
+        state.status = action.payload.status
+        state.message = action.payload.message
+        state.error = action.payload.error
+        state.user = action.payload.user
       })
       .addCase(loginAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -74,8 +74,8 @@ const authSlice = createSlice({
       })
       .addCase(logoutAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.status = action.payload?.status
-        state.message = action.payload?.message
+        state.status = action.payload.status
+        state.message = action.payload.message
       })
       .addCase(logoutAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -87,9 +87,9 @@ const authSlice = createSlice({
       })
       .addCase(registerAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.status = action.payload?.status
-        state.message = action.payload?.message
-        state.error = action.payload?.error
+        state.status = action.payload.status
+        state.message = action.payload.message
+        state.error = action.payload.error
       })
       .addCase(registerAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -102,9 +102,9 @@ const authSlice = createSlice({
       })
       .addCase(verificationAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.status = action.payload?.status
-        state.message = action.payload?.message
-        state.error = action.payload?.error
+        state.status = action.payload.status
+        state.message = action.payload.message
+        state.error = action.payload.error
       })
       .addCase(verificationAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -117,9 +117,9 @@ const authSlice = createSlice({
       })
       .addCase(resendCodeAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
-        state.status = action.payload?.status
-        state.message = action.payload?.message
-        state.error = action.payload?.error
+        state.status = action.payload.status
+        state.message = action.payload.message
+        state.error = action.payload.error
       })
       .addCase(resendCodeAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
