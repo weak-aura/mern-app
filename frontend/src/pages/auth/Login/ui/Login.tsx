@@ -12,10 +12,11 @@ export const Login = () => {
   const emailRef = React.useRef<HTMLInputElement | null>(null)
   const passwordRef = React.useRef<HTMLInputElement | null>(null)
   const {
-    status,
-    loading,
-    message,
-    error,
+    loading: authLoading,
+    status: authStatus,
+    message:authMessage,
+    error:authError,
+    cookie: authCookie
   } = appUseSeletor(state => state.authReducer)
   const dispatch = appUseDispatch();
 
@@ -32,31 +33,33 @@ export const Login = () => {
   }
 
   React.useEffect(() => {
-    if (status === "login") {
+    if (authStatus === "login") {
       navigate("/")
     }
-  }, [status])
+  }, [authStatus])
 
   React.useEffect(() => {
-    if (loading === "fulfilled" && error && isFormSubmitted) {
-      toast.error(error);
+    if (authLoading === "fulfilled" && authError && isFormSubmitted) {
+      toast.error(authError);
       setIsFormSubmitted(false);
-    } else if (loading === "fulfilled" && message && isFormSubmitted) {
-      toast.success(message)
+    } else if (authLoading === "fulfilled" && authMessage && isFormSubmitted) {
+      toast.success(authMessage)
       setIsFormSubmitted(false)
     }
-  }, [loading, error, message, isFormSubmitted]);
+  }, [authLoading, authError, authMessage, isFormSubmitted]);
 
   React.useEffect(() => {
-    dispatch(getMeAsyncThunk())
+    if (authCookie !== "invalid_auth_cache") {
+      dispatch(getMeAsyncThunk())
+    }
   }, [])
 
   React.useEffect(() => {
-    if (loading === "fulfilled" && status === "getme") {
+    if (authLoading === "fulfilled" && authStatus === "getme") {
       navigate("/")
     }
-  }, [status])
-
+  }, [authStatus])
+  
   return (
     <div className="w-full h-[100vh] flex items-center ">
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -70,15 +73,24 @@ export const Login = () => {
           <label className={styles.label}>Пароль</label>
           <input ref={passwordRef} type="password" className={styles.input} required/>
         </div>
-        <div className={styles.submit_area}>
-          <Button className="w-[72px]" type={"submit"}>{loading === "pending" ? <Spinner/> : "Войти"}</Button>
-          <Link to={"/register"} className={styles.link_route}>Создать
+        <Button className="w-full" type={"submit"}>{authLoading === "pending" ? <Spinner/> : "Войти"}</Button>
+
+        <div className="flex justify-center">
+          <Link to={"/recover_password"} type="button" className={`${styles.additional_link}`}>Забыли пароль?</Link>
+        </div>
+        <div className="flex justify-center">
+          <Link to={"/register"} className={`${styles.additional_link}`}>Создать
             аккаунт?</Link>
         </div>
       </form>
     </div>
   );
 };
+
+
+
+
+
 
 
 

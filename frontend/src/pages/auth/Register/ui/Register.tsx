@@ -13,7 +13,13 @@ export const Register = () => {
   const passwordRef = React.useRef<HTMLInputElement | null>(null)
   const navigate = useNavigate();
   const dispatch = appUseDispatch();
-  const {status, loading, message, error } = appUseSeletor(state => state.authReducer)
+  const {
+    loading: authLoading,
+    status: authStatus,
+    message: authMessage,
+    error: authError,
+    cookie: authCookie
+  } = appUseSeletor(state => state.authReducer)
   const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -27,33 +33,35 @@ export const Register = () => {
   }
 
   React.useEffect(() => {
-    if (isFormSubmitted && status === "register" && loading === "fulfilled") {
-      // toast.success(message, {duration: 6000})
+    if (isFormSubmitted && authStatus === "register" && authLoading === "fulfilled") {
       navigate("/verification")
       setIsFormSubmitted(false)
     }
-  }, [status, isFormSubmitted, loading]);
+  }, [authStatus, isFormSubmitted, authLoading]);
 
+ 
   React.useEffect(() => {
-    if (loading === "fulfilled" && error && isFormSubmitted) {
-      toast.error(error)
+    if (authLoading === "fulfilled" && authError && isFormSubmitted) {
+      toast.error(authError)
       setIsFormSubmitted(false)
-    } else if (loading === "fulfilled" && message && isFormSubmitted) {
-      toast.success(message)
+    } else if (authLoading === "fulfilled" && authMessage && isFormSubmitted) {
+      toast.success(authMessage)
       setIsFormSubmitted(false)
     }
-  }, [loading])
+  }, [authLoading])
 
 
   React.useEffect(() => {
-    dispatch(getMeAsyncThunk())
+    if (authCookie !== "invalid_auth_cache") {
+      dispatch(getMeAsyncThunk())
+    }
   }, [])
 
   React.useEffect(() => {
-    if (loading === "fulfilled" && status === "getme") {
+    if (authLoading === "fulfilled" && authStatus === "getme") {
       navigate("/")
     }
-  }, [status])
+  }, [authStatus])
 
   return (
     <div className="w-full h-[100vh] flex items-center justify-center">
@@ -72,8 +80,8 @@ export const Register = () => {
           <label className={styles.label}>Пароль</label>
           <input ref={passwordRef} type="password" className={styles.input} required/>
         </div>
-        <div className={`${styles.submit_area} ${loading === "pending" ? "pointer-events-none cursor-default" : ""}`}>
-          <Button type="submit" className="min-w-[92px]">{loading === "pending" ? (<Spinner/>) : (
+        <div className={`${styles.submit_area} ${authLoading === "pending" ? "pointer-events-none cursor-default" : ""}`}>
+          <Button type="submit" className="min-w-[92px]">{authLoading === "pending" ? (<Spinner/>) : (
             <h1>Создать</h1>)}</Button>
           <Link to={"/login"} className={styles.link_route}>Уже есть аккаунт?</Link>
         </div>

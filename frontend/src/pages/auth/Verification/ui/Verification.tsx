@@ -5,6 +5,7 @@ import {OutlineButton} from "../../../../components/buttons/OutlineButton";
 import {Link, useNavigate} from "react-router-dom";
 import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
 import {
+  getMeAsyncThunk,
   resendCodeAsyncThunk,
   verificationAsyncThunk
 } from "../../../../redux/features/asyncActions/authAsyncThunk.ts";
@@ -15,9 +16,15 @@ export const Verification = () => {
   const codeRef = React.useRef<HTMLInputElement | null>(null)
   const navigate = useNavigate();
   const dispatch = appUseDispatch();
-  const {status, loading, message, error, pendingHook} = appUseSeletor(state => state.authReducer)
   const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
-
+  const {
+    loading: authLoading,
+    status: authStatus,
+    message: authMessage,
+    error: authError,
+    cookie: authCookie,
+    hook_pending
+  } = appUseSeletor(state => state.authReducer)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const code = {verifyCode: codeRef?.current?.value}
@@ -31,20 +38,32 @@ export const Verification = () => {
   }
 
   React.useEffect(() => {
-    if (status === "verification" && loading === "fulfilled") {
+    if (authStatus === "verification" && authLoading === "fulfilled") {
       navigate("/login")
     }
-  }, [status, loading])
+  }, [authStatus, authLoading])
 
   React.useEffect(() => {
-    if(loading === "fulfilled" && error && isFormSubmitted) {
-      toast.error(error)
+    if(authLoading === "fulfilled" && authError && isFormSubmitted) {
+      toast.error(authError)
       setIsFormSubmitted(false)
-    }else if (loading === "fulfilled" && message && isFormSubmitted){
-      toast.success(message)
+    }else if (authLoading === "fulfilled" && authMessage && isFormSubmitted){
+      toast.success(authMessage)
       setIsFormSubmitted(false)
     }
-  }, [loading])
+  }, [authLoading])
+
+  React.useEffect(() => {
+    if (authCookie !== "invalid_auth_cache") {
+      dispatch(getMeAsyncThunk())
+    }
+  }, [])
+
+  React.useEffect(() => {
+    if (authLoading === "fulfilled" && authStatus === "getme") {
+      navigate("/")
+    }
+  }, [authStatus])
 
   
   return (
@@ -56,13 +75,13 @@ export const Verification = () => {
           <input ref={codeRef} type="text" className={styles.input} required/>
         </div>
         <div className="flex items-center justify-between gap-4 mb-5">
-          <Button className="w-[117px]" type={"submit"}>{loading === "pending" && pendingHook === "verification" ? (<Spinner/>) : ("Подтвердить")}</Button>
+          <Button className="w-[117px]" type={"submit"}>{authLoading === "pending" && hook_pending === "verification" ? (<Spinner/>) : ("Подтвердить")}</Button>
           <Link to={"/register"}>
             <OutlineButton type={"button"}>Вернуться Назад</OutlineButton>
           </Link>
         </div>
-        <div onClick={handleResendCode} className={loading === "pending"? "pointer-events-none cursor-default" : ""}>
-          <Button type={"button"} className="w-[208px]">{loading === "pending" && pendingHook === "resendCode"? (<Spinner/>) : ("Отправить код повторно")}</Button>
+        <div onClick={handleResendCode} className={authLoading === "pending"? "pointer-events-none cursor-default" : ""}>
+          <Button type={"button"} className="w-[208px]">{authLoading === "pending" && hook_pending === "resendCode"? (<Spinner/>) : ("Отправить код повторно")}</Button>
         </div>
       </form>
     </div>

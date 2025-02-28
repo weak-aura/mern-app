@@ -1,9 +1,9 @@
 ﻿import {createSlice} from "@reduxjs/toolkit";
 import {
   getMeAsyncThunk,
-  loginAsyncThunk, logoutAsyncThunk,
+  loginAsyncThunk, logoutAsyncThunk, recoverPasswordEmailVerificationAsyncThunk, recoverPasswordAsyncThunk,
   registerAsyncThunk, resendCodeAsyncThunk,
-  verificationAsyncThunk
+  verificationAsyncThunk, recoverPasswordResendCodeAsyncThunk, recoverPasswordResetAsyncThunk
 } from "../asyncActions/authAsyncThunk.ts";
 
 interface User {
@@ -12,23 +12,25 @@ interface User {
 }
 
 interface InitialStateTypes {
-  error: string | undefined
+  error: string | null
   user: User | null
   loading: string
-  message: string
-  status: string
-  
-  pendingHook: string
+  message: string | null
+  status: string | null
+  cookie: string | null
+  cookie_code: string | null
+  hook_pending: string
 }
 
 const initialState: InitialStateTypes = {
-  error: "",
+  error: null,
   user: null,
-  loading: "",
-  message: "",
-  status: "",
-  
-  pendingHook: "idle"
+  loading: "idle",
+  message: null,
+  status: null,
+  cookie: null,
+  cookie_code: null,
+  hook_pending: "idle"
 }
 
 const authSlice = createSlice({
@@ -38,7 +40,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // GETME:
+      // GET ME:
       .addCase(getMeAsyncThunk.pending, (state) => {
         state.loading = "pending"
       })
@@ -48,6 +50,7 @@ const authSlice = createSlice({
         state.status = action.payload.status
         state.error = action.payload.error
         state.user = action.payload.user
+        state.cookie = action.payload.cookie
       })
       .addCase(getMeAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
@@ -98,7 +101,7 @@ const authSlice = createSlice({
       // VERIFICATION:
       .addCase(verificationAsyncThunk.pending, (state) => {
         state.loading = "pending"
-        state.pendingHook = "verification"
+        state.hook_pending = "verification"
       })
       .addCase(verificationAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
@@ -110,10 +113,10 @@ const authSlice = createSlice({
         state.loading = "rejected"
       })
 
-      //   RESENDCODE:
+      //   RESEND CODE:
       .addCase(resendCodeAsyncThunk.pending, (state) => {
         state.loading = "pending"
-        state.pendingHook = "resendCode"
+        state.hook_pending = "resendCode"
       })
       .addCase(resendCodeAsyncThunk.fulfilled, (state, action) => {
         state.loading = "fulfilled"
@@ -124,6 +127,65 @@ const authSlice = createSlice({
       .addCase(resendCodeAsyncThunk.rejected, (state) => {
         state.loading = "rejected"
       })
+
+      //   RECOVER PASSWORD:
+      .addCase(recoverPasswordAsyncThunk.pending, (state) => {
+        state.loading = "pending"
+      })
+      .addCase(recoverPasswordAsyncThunk.fulfilled, (state,action) => {
+        state.loading = "fulfilled"
+        state.message = action.payload.message
+        state.error = action.payload.error
+        state.status = action.payload.status
+      })
+      .addCase(recoverPasswordAsyncThunk.rejected, (state) => {
+        state.loading = "rejected"
+      })
+
+      // RECOVER PASSWORD EMAIL VERIFICATION
+      .addCase(recoverPasswordEmailVerificationAsyncThunk.pending, (state) => {
+        state.loading = "pending"
+      })
+      .addCase(recoverPasswordEmailVerificationAsyncThunk.fulfilled, (state,action) => {
+        state.loading = "fulfilled"
+        state.message = action.payload.message
+        state.error = action.payload.error
+        state.status = action.payload.status
+        state.cookie_code = action.payload.cookie_code
+      })
+      .addCase(recoverPasswordEmailVerificationAsyncThunk.rejected, (state) => {
+        state.loading = "rejected"
+      })
+      
+      // RECOVER PASSWORD RESEND CODE
+      .addCase(recoverPasswordResendCodeAsyncThunk.pending, (state) => {
+        state.loading = "pending"
+        state.hook_pending = "resend_code"
+      })
+      .addCase(recoverPasswordResendCodeAsyncThunk.fulfilled, (state, action) => {
+        state.loading = "fulfilled"
+        state.message = action.payload.message
+        state.error = action.payload.error
+        state.cookie_code = action.payload.cookie_code
+      })
+      .addCase(recoverPasswordResendCodeAsyncThunk.rejected, (state) => {
+        state.loading = "rejected"
+      })
+      
+      // PASSWORD RESET
+      .addCase(recoverPasswordResetAsyncThunk.pending, (state) =>{
+        state.loading = "pending"
+      })
+      .addCase(recoverPasswordResetAsyncThunk.fulfilled, (state, action) => {
+        state.loading = "fulfilled"
+        state.message = action.payload.message
+        state.error = action.payload.error
+        state.status = action.payload.status
+      })
+      .addCase(recoverPasswordResetAsyncThunk.rejected, (state) => {
+        state.loading = "rejected"
+      })
+    
   }
 })
 

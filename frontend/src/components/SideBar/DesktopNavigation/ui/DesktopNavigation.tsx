@@ -22,14 +22,14 @@ export const DesktopNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const dispatch = appUseDispatch()
-  const {status: authStatus} = appUseSeletor(state => state.authReducer)
+  const {status: authStatus, cookie: authCookie} = appUseSeletor(state => state.authReducer)
   const {
     loading: authLoading,
     error: authError,
   } = appUseSeletor(state => state.authReducer);
 
   React.useEffect(() => {
-    if (authStatus !== "getme") {
+    if (authCookie !== "auth_cache") {
       dispatch(getMeAsyncThunk())
     }
   }, [])

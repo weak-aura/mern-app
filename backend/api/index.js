@@ -10,12 +10,14 @@ const {postRoutes} = require("../routes/post.routes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+const origin = process.env.CORS_MODE_PRODUCTION
+// const origin = process.env.CORS_MODE_DEVELOPMENT
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-  origin: process.env.CORS_MODE_PRODUCTION, 
+  origin: origin, 
   credentials: true,
 }));
 

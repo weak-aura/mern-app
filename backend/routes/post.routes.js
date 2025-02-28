@@ -1,6 +1,6 @@
 ﻿const express = require("express");
 const {create, getAllPosts, deletePost, getOnePost, getMyPosts} = require("../controllers/post.controller");
-const {verifyAuth} = require("../middleware/verifyToken");
+const {verifyAuth} = require("../middleware/tokenValidation");
 const {uploadFile} = require("../middleware/multer");
 
 const router = express.Router();

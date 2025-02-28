@@ -1,7 +1,13 @@
 ﻿const {UserModel} = require("../models/auth.model");
 const bcrypt = require("bcryptjs");
-const {generateAuthToken, generateEmailCodeToken, generateUserToken} = require("../utils/generateToken");
-const {sendMail} = require("../utils/sendMail");
+const {
+  generateAuthToken,
+  generateEmailCodeToken,
+  generateUserToken,
+  generateAccessEmailToken,
+  generateRefreshEmailToken,
+} = require("../utils/generateToken");
+const {initiateUserEmailVerification, InitiatePasswordResetByEmail} = require("../utils/nodemailer");
 const register = async (req, res) => {
   try {
     const {email, username, password} = req.body
@@ -30,7 +36,7 @@ const register = async (req, res) => {
     if (user) {
       generateUserToken(user, res)
       generateEmailCodeToken(generateCode, res)
-      await sendMail(email, generateCode)
+      await initiateUserEmailVerification(email, generateCode)
       res.status(201).json({
         message: `Код для верификаций отправлен на почту: ${email}, время действия кода 30 секунд`,
         status: "register"
@@ -75,7 +81,7 @@ const resendCode = async (req, res) => {
     const payload = req.user
     const generateCode = Math.floor(100000 + Math.random() * 900000)
 
-    await sendMail(payload.email, generateCode);
+    await initiateUserEmailVerification(payload.email, generateCode);
     generateEmailCodeToken(generateCode, res);
 
     res.status(201).json({message: `Код был отправлен повторно на почту ${payload.email}`, status: "resendCode"});
@@ -110,7 +116,7 @@ const login = async (req, res) => {
 }
 const logout = async (req, res) => {
   try {
-    res.clearCookie("auth_token", 
+    res.clearCookie("auth_cache",
       {
         httpOnly: true,
         secure: true,
@@ -122,15 +128,129 @@ const logout = async (req, res) => {
     res.status(500).json({error: "Internal Server Error"})
   }
 }
-const getme = async (req, res) => {
+const getMe = async (req, res) => {
   try {
     const user = await UserModel.findById(req.userId).select("-password")
 
-    res.status(201).json({message: "Аутентификация прошла успешно", user, status: "getme"})
+    res.status(201).json({message: "Аутентификация прошла успешно", user, status: "getme", cookie: "auth_cache"})
   } catch (error) {
-    console.log("Error in getme: ", error.message)
+    console.log("Error in logout: ", error.message)
     res.status(500).json({error: "Internal Server Error"})
   }
 }
 
-module.exports = {register, verification, resendCode, login, logout, getme}
+const recoverPassword = async (req, res) => {
+  try {
+    const generateCode = Math.floor(100000 + Math.random() * 900000)
+    const {email} = req.body
+    const userExists = await UserModel.findOne({email});
+    if (!userExists) {
+      return res.status(404).json({error: "Пользователь с такой почтой не существует"})
+    }
+
+    if (userExists) {
+      generateAccessEmailToken(email, res)
+      generateEmailCodeToken(generateCode, res)
+      await InitiatePasswordResetByEmail(email, generateCode)
+      res.clearCookie("refresh_email_cache",
+        {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none"
+        });
+      res.status(200).json({
+        message: `Код для сброса пароля был отправлен на почту ${email}`,
+        status: "recover_password"
+      })
+    }
+
+  } catch (error) {
+    console.log("error in recoverPassword:", error.message)
+    res.status(500).json({error: "Internal Server Error"})
+  }
+}
+
+const recoverPasswordEmailVerification = async (req, res) => {
+  try {
+    const {verifyCode} = req.body
+    const code = req.code
+    const email = req.email
+
+    if (verifyCode !== String(code)) {
+      return res.status(400).json({error: "Введенный вами код не правильный, пожалуйста проверьте вашу почту"})
+    } else {
+      generateRefreshEmailToken(email, res)
+      res.clearCookie("access_email_cache",
+        {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none"
+        });
+    }
+
+    res.status(200).json({message: "Ваш код подтвержден", status: "r_pwd_email_verified"})
+
+  } catch (error) {
+    console.log("error in passwordResetEmailVerification:", error.message)
+    res.status(500).json({error: "Internal Server Error"})
+  }
+}
+
+const recoverPasswordResendCode = async (req, res) => {
+  try {
+    const email = req.email
+    const generateCode = Math.floor(100000 + Math.random() * 900000)
+
+    if (email) {
+      generateAccessEmailToken(email, res)
+      generateEmailCodeToken(generateCode, res)
+      await InitiatePasswordResetByEmail(email, generateCode)
+      res.status(200).json({message: `Код повторно отправлен на почту ${email}`, cookie_code: "valid_code"})
+    }
+    
+  } catch (error) {
+    console.log("error in recoverPasswordResendCode:", error.message)
+    res.status(500).json({error: "Internal Server Error"})
+  }
+}
+
+const recoverPasswordReset = async (req, res) => {
+  try {
+    const {password, confirmPassword} = req.body;
+    const email = req.email
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({error: "Пароли не совпадают"})
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt)
+
+
+    const passwordUpdated = await UserModel.findOneAndUpdate({email}, {password: hashPassword})
+    res.clearCookie("refresh_email_cache",
+      {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+      });
+    res.status(200).json({message: "Ваш пароль успешно изменен", status: "password_updated"})
+
+  } catch (error) {
+    console.log("error in passwordReset:", error.message)
+    res.status(500).json({error: "Internal Server Error"})
+  }
+}
+
+module.exports = {
+  register,
+  verification,
+  resendCode,
+  login,
+  logout,
+  getMe,
+  recoverPassword,
+  recoverPasswordEmailVerification,
+  recoverPasswordResendCode,
+  recoverPasswordReset,
+}

@@ -1,11 +1,12 @@
 ﻿import {createAsyncThunk} from "@reduxjs/toolkit";
 
-const API_URL = import.meta.env.VITE_PRODUCTION_MODE
+const SERVER_URL = import.meta.env.VITE_MODE_PRODUCTION
+// const SERVER_URL = import.meta.env.VITE_MODE_DEVELOPMENT
 
 export const createPostAsyncThunk = createAsyncThunk("createPostAsyncThunk",
   async (payload: FormData) => {
     try {
-      return await fetch(`${API_URL}/api/post/create`, {
+      return await fetch(`${SERVER_URL}/api/post/create`, {
         method: "POST",
         body: payload,
         credentials: "include"
@@ -19,7 +20,7 @@ export const createPostAsyncThunk = createAsyncThunk("createPostAsyncThunk",
 export const getAllPostsAsyncThunk = createAsyncThunk("getAllPostsAsyncThunk",
   async () => {
     try {
-      const data = await fetch(`${API_URL}/api/post/getAllPosts`, {
+      const data = await fetch(`${SERVER_URL}/api/post/getAllPosts`, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
         credentials: "include"
@@ -37,7 +38,7 @@ export const getAllPostsAsyncThunk = createAsyncThunk("getAllPostsAsyncThunk",
 export const getOnePostAsyncThunk = createAsyncThunk("getOnePostAsyncThunk", 
   async (payload: string | undefined) => {
     try {
-      const response = await fetch(`${API_URL}/api/post/getOnePost/${payload}`, {
+      const response = await fetch(`${SERVER_URL}/api/post/getOnePost/${payload}`, {
         method: "GET",
         credentials: "include"
       })
@@ -52,7 +53,7 @@ export const getOnePostAsyncThunk = createAsyncThunk("getOnePostAsyncThunk",
 export const deletePostAsyncThunk = createAsyncThunk("deletePostAsyncThunk",
   async (payload: string) => {
     try {
-      const data = await fetch(`${API_URL}/api/post/deletePost/${payload}`, {
+      const data = await fetch(`${SERVER_URL}/api/post/deletePost/${payload}`, {
         method: "DELETE",
         credentials: "include",
       })
