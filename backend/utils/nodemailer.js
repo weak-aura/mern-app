@@ -10,7 +10,7 @@ const userVerificationEmailTemplate = (code) => {
               <h2 style="font-size: 28px; margin-top: 20px; margin-bottom: 15px; color: #212529;">Добро пожаловать!</h2>
               <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Для завершения регистрации, пожалуйста, используйте следующий код:</p>
               <div style="background-color: #007bff; color: #fff; font-size: 24px; font-weight: 600; padding: 14px 24px; border-radius: 8px; letter-spacing: 2px; margin: 25px auto; display: table; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">${code}</div>
-              <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Этот код действителен в течение 30 секунд.</p>
+              <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Этот код действителен в течение 2 минут.</p>
               <div style="color: #777; font-size: 14px; text-align: center; margin-top: 20px;">
                 <p>Если у вас возникли проблемы, обратитесь в <a href="https://wa.me/+77472999242" style="color: #007bff; text-decoration: none;">службу поддержки</a>.</p>
               </div>
@@ -31,7 +31,7 @@ const passwordResetByEmailTemplate = (code) => {
             <div style="text-align: center; margin-bottom: 30px;">
               <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Для продолжения сброса пароля, пожалуйста, используйте следующий код:</p>
               <div style="background-color: #007bff; color: #fff; font-size: 24px; font-weight: 600; padding: 14px 24px; border-radius: 8px; letter-spacing: 2px; margin: 25px auto; display: table; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">${code}</div>
-              <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Этот код действителен в течение 30 секунд.</p>
+              <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Этот код действителен в течение 2 минут.</p>
               <div style="color: #777; font-size: 14px; text-align: center; margin-top: 20px;">
                 <p>Если у вас возникли проблемы, обратитесь в <a href="https://wa.me/+77472999242" style="color: #007bff; text-decoration: none;">службу поддержки</a>.</p>
               </div>

@@ -1,6 +1,6 @@
 ﻿import {createAsyncThunk} from "@reduxjs/toolkit";
 
-const SERVER_URL = import.meta.env.VITE_MODE_PRODUCTION
+const SERVER_URL = import.meta.env.VITE_MODE_PRODUCTION || import.meta.env.VITE_MODE_DEVELOPMENT
 // const SERVER_URL = import.meta.env.VITE_MODE_DEVELOPMENT
 
 interface UserDataTypes {
