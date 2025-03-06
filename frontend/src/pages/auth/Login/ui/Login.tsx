@@ -73,7 +73,7 @@ export const Login = () => {
           <label className={styles.label}>Пароль</label>
           <input ref={passwordRef} type="password" className={styles.input} required/>
         </div>
-        <Button className="w-full" type={"submit"}>{authLoading === "pending" ? <Spinner/> : "Войти"}</Button>
+        <Button className={`w-full ${authLoading === "pending" ? "pointer-events-none cursor-default" : ""}`} type={"submit"}>{authLoading === "pending" ? <Spinner/> : "Войти"}</Button>
 
         <div className="flex justify-center">
           <Link to={"/recover_password"} type="button" className={`${styles.additional_link}`}>Забыли пароль?</Link>

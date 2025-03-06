@@ -1,7 +1,7 @@
 ﻿const jwt = require("jsonwebtoken");
 const {UserModel} = require("../models/auth.model");
 
-const emailValidate = async (req, res, next) => {
+const emailValidation = async (req, res, next) => {
   try {
     const emailCodeToken = req.cookies.email_code_cache
     const userToken = req.cookies.user_cache
@@ -87,7 +87,7 @@ const hookRefreshEmailCache = (req, res, next) => {
   }
 }
 
-const userCacheHook = (req, res, next) => {
+const hookUserCache = (req, res, next) => {
   try {
     const userToken = req.cookies.user_cache
     if (!userToken) {
@@ -98,12 +98,12 @@ const userCacheHook = (req, res, next) => {
     req.user = decodedUserToken.payload;
     next();
   } catch (error) {
-    console.log("Error in userCacheHook", error.message)
+    console.log("Error in hookUserCache", error.message)
     res.status(400).json({error: "Invalid User Token"})
   }
 }
 
-const verifyAuth = async (req, res, next) => {
+const authValidation = async (req, res, next) => {
   try {
     const token = req.cookies.auth_cache
     if (!token) {
@@ -115,16 +115,16 @@ const verifyAuth = async (req, res, next) => {
     req.userId = await UserModel.findById(decoded.id)
     next();
   } catch (error) {
-    console.log("Error in verifyAuth", error.message)
+    console.log("Error in authValidation", error.message)
     res.status(400).json({error: "Invalid Auth Token"})
   }
 }
 
 module.exports = {
-  emailValidate,
+  emailValidation,
   recoverPasswordEmailValidation,
-  verifyAuth,
-  userCacheHook,
+  authValidation,
+  hookUserCache,
   hookAccessEmailCache,
   hookRefreshEmailCache
 }
