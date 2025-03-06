@@ -102,7 +102,7 @@ export const CreatePost = () => {
 
       </div>
       <br/>
-      <Button className="w-[85px]" type={"submit"}>{loading === "pending" ? (<Spinner/>) : "Создать"}</Button>
+      <Button className={`w-[85px] ${loading === "pending" ? "pointer-events-none cursor-default" : ""}`} type={"submit"}>{loading === "pending" ? (<Spinner/>) : "Создать"}</Button>
     </form>
   );
 };
