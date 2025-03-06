@@ -52,7 +52,7 @@ export const AllPosts = () => {
   return (
     <div className="container mx-auto">
       <div
-        className="h-[760px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll overflow-x-hidden lg:overflow-hidden">
+        className="h-[786px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll overflow-x-hidden lg:overflow-hidden">
         {postLoading === "pending" && <PostCardSkeleton cards={6}/>}
         {postLoading === "fulfilled" && currentPosts.length === 0 && (<h1>Постов нет</h1>)}
         {postLoading === "fulfilled" && currentPosts?.map((el) => (
