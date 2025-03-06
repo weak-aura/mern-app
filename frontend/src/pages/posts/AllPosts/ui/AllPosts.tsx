@@ -60,7 +60,7 @@ export const AllPosts = () => {
             <PostCard {...el} />
           </div>
         ))}
-       
+
       </div>
       <Pagination handlePageChange={handlePageChange}
                   indexOfLastPost={indexOfLastPost}

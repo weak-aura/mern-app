@@ -31,7 +31,7 @@ export const PostCard = ({description, imageUrl, title, author, _id, createdAt}:
 
   return (
     <div
-      className="MAIN-FRAME  min-w-[220px] border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 h-[385px] flex flex-col">
+      className="MAIN-FRAME  min-w-screen border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 h-[385px] flex flex-col">
       <div className={`${toggle && "OVERLAY fixed top-0 left-0 w-full h-full bg-transparent z-10"}`}
            onClick={handleClosePopup}
       />
