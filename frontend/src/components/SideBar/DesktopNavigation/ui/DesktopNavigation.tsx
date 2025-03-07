@@ -35,6 +35,7 @@ export const DesktopNavigation = () => {
     }
   }, [])
 
+
   React.useEffect(() => {
     if (authLoading === "fulfilled" && authError) {
       navigate("/login")
