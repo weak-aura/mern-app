@@ -10,6 +10,7 @@ import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
 import {IoHome} from "react-icons/io5";
 import {IoIosCreate} from "react-icons/io";
 import {FaThList} from "react-icons/fa";
+import {MernLogo} from "../../../MernLogo";
 
 export const DesktopNavigation = () => {
   const {id} = useParams();
@@ -46,8 +47,9 @@ export const DesktopNavigation = () => {
 
   return (
     <div className="max-w-[260px] flex flex-col min-w-[260px] h-[500px] bg-[#3D366A] rounded-r-[32px] rounded-l-[14px]">
-      <h1 className="text-center pt-[40px] select-none">Mern <span
-        className="bg-[#F79817] font-black text-black py-0.5 px-1 rounded-sm">logo</span></h1>
+      <div className="text-center pt-[40px] select-none">
+        <MernLogo/>
+      </div>
       <ul className="pl-[45px] pt-[40px] flex flex-col flex-1 text-sm font-medium ">
         {tabs.map((el) => (
           <button key={el.pathname}

@@ -1,9 +1,20 @@
 ﻿// import React from 'react';
 import {Outlet} from "react-router-dom";
 import {SideBar} from "../../../components/SideBar";
+import {appUseSeletor} from "../../../redux/redux-hooks.ts";
+import {MernLogo} from "../../../components/MernLogo";
 
 export const Layout = () => {
   
+  const {loading: authLoading} = appUseSeletor(state => state.authReducer)
+  
+  if(authLoading === "pending") {
+    return (
+      <div className={"w-full h-[100vh] flex items-center justify-center"}>
+        <MernLogo size={50} font_size={"text-[50px]"}/>
+      </div>
+    )
+  }
   
   return (
     <>
