@@ -30,8 +30,10 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path={"/posts"} element={<AllPosts/>}/>
       <Route path={"/posts/:id"} element={<OnePost/>}/>
       <Route path={"/posts/create"} element={<CreatePost/>}/>
-      <Route path={"/register"} element={<Register/>}/>
+    </Route>
+    <Route>
       <Route path={"/login"} element={<Login/>}/>
+      <Route path={"/register"} element={<Register/>}/>
       <Route path={"/verification"} element={<Verification/>}/>
       <Route path={"/recover_password"} element={<RecoverPassword/>}/>
       <Route path={"/recover_password/email_verification"} element={<RecoverPasswordEmailVerification/>}/>

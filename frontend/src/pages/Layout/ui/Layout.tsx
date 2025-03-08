@@ -5,15 +5,15 @@ import {MernLogo} from "../../../components/MernLogo";
 
 export const Layout = () => {
 
-  const {loading: authLoading} = appUseSeletor(state => state.authReducer)
-
-  if (authLoading === "pending") {
-    return (
-      <div className={"w-full h-[100vh] flex items-center justify-center"}>
-        <MernLogo size={30} font_size={"text-[30px]"}/>
-      </div>
-    )
-  }
+  // const {loading: authLoading} = appUseSeletor(state => state.authReducer)
+  //
+  // if (authLoading === "pending") {
+  //   return (
+  //     <div className={"w-full h-[100vh] flex items-center justify-center"}>
+  //       <MernLogo size={30} font_size={"text-[30px]"}/>
+  //     </div>
+  //   )
+  // }
 
   return (
     <>

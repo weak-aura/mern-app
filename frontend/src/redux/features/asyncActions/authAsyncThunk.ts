@@ -84,7 +84,7 @@ export const logoutAsyncThunk = createAsyncThunk("/logoutAsyncThunk", async () =
 export const getMeAsyncThunk = createAsyncThunk("/getMeAsyncThunk",
   async () => {
     try {
-      return await fetch(`${SERVER_URL}/api/auth/getme`, {
+      return await fetch(`${SERVER_URL}/api/auth/getMe`, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
         credentials: "include"

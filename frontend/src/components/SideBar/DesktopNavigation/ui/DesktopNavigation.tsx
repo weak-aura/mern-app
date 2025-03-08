@@ -42,8 +42,6 @@ export const DesktopNavigation = () => {
     }
   }, [authError]);
   
-  
-  
   const handleClickOnTab = (pathname: string) => {
     navigate(pathname)
   }
