@@ -1,16 +1,7 @@
-﻿import {Navigate, Outlet} from "react-router-dom";
+﻿import {Outlet} from "react-router-dom";
 import {SideBar} from "../../../components/SideBar";
-import {appUseSeletor} from "../../../redux/redux-hooks.ts";
-
-
 
 export const Layout = () => {
-  const {status: authStatus} = appUseSeletor(state => state.authReducer)
-
-
-  if (authStatus !== 'getme') {
-    return <Navigate to={"/login"} replace/>
-  }
   
   return (
     <>

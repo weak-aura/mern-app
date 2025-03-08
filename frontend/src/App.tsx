@@ -22,26 +22,11 @@ import {RecoverPasswordReset} from "./pages/auth/RecoverPasswordReset";
 import {AllPosts} from "./pages/posts/AllPosts";
 import {OnePost} from "./pages/posts/OnePost";
 import {CreatePost} from "./pages/posts/CreatePost";
-import {getMeAsyncThunk} from "./redux/features/asyncActions/authAsyncThunk.ts";
-
-import {store} from "./redux/store.ts";
-
-const checkAuth = async () => {
-  try {
-
-    await store.dispatch(getMeAsyncThunk());
-    return store.getState().authReducer.status;
-  } catch (error) {
-    console.error("checkAuth error:", error);
-    return null;
-  }
-};
 
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path={"/"} element={<Main/>}>
-    <Route path={"/"} element={<Layout/>} loader={checkAuth}>
-
+    <Route path={"/"} element={<Layout/>}>
       <Route index element={<Home/>}/>
       <Route path={"/posts"} element={<AllPosts/>}/>
       <Route path={"/posts/:id"} element={<OnePost/>}/>
