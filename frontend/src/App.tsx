@@ -2,7 +2,7 @@ import {
   RouterProvider,
   Route,
   createBrowserRouter,
-  createRoutesFromElements,
+  createRoutesFromElements
 } from "react-router-dom";
 import {Main} from "./pages/Main";
 import {Layout} from "./pages/Layout";
@@ -23,7 +23,6 @@ import {AllPosts} from "./pages/posts/AllPosts";
 import {OnePost} from "./pages/posts/OnePost";
 import {CreatePost} from "./pages/posts/CreatePost";
 
-
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path={"/"} element={<Main/>}>
     <Route path={"/"} element={<Layout/>}>
@@ -31,8 +30,6 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path={"/posts"} element={<AllPosts/>}/>
       <Route path={"/posts/:id"} element={<OnePost/>}/>
       <Route path={"/posts/create"} element={<CreatePost/>}/>
-    </Route>
-    <Route>
       <Route path={"/register"} element={<Register/>}/>
       <Route path={"/login"} element={<Login/>}/>
       <Route path={"/verification"} element={<Verification/>}/>

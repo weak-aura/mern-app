@@ -23,7 +23,7 @@ export const DesktopNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const dispatch = appUseDispatch()
-  const { cookie: authCookie} = appUseSeletor(state => state.authReducer)
+  const {cookie: authCookie} = appUseSeletor(state => state.authReducer)
   const {
     loading: authLoading,
     error: authError,
@@ -41,7 +41,9 @@ export const DesktopNavigation = () => {
       navigate("/login")
     }
   }, [authError]);
-
+  
+  
+  
   const handleClickOnTab = (pathname: string) => {
     navigate(pathname)
   }
