@@ -1,10 +1,10 @@
-﻿import React from 'react';
+﻿// import React from 'react';
 import styles from "./DesktopNavigation.module.scss";
 import {motion} from "framer-motion";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {UserBar} from "../../../UserBar";
-import {getMeAsyncThunk} from "../../../../redux/features/asyncActions/authAsyncThunk.ts";
-import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
+// import {getMeAsyncThunk} from "../../../../redux/features/asyncActions/authAsyncThunk.ts";
+// import { appUseSeletor} from "../../../../redux/redux-hooks.ts";
 
 // react-icons:
 import {IoHome} from "react-icons/io5";
@@ -22,25 +22,25 @@ export const DesktopNavigation = () => {
 
   const navigate = useNavigate();
   const location = useLocation()
-  const dispatch = appUseDispatch()
-  const { cookie: authCookie} = appUseSeletor(state => state.authReducer)
-  const {
-    loading: authLoading,
-    error: authError,
-  } = appUseSeletor(state => state.authReducer);
+  // const dispatch = appUseDispatch()
+  // const { cookie: authCookie} = appUseSeletor(state => state.authReducer)
+  // const {
+  //   loading: authLoading,
+  //   error: authError,
+  // } = appUseSeletor(state => state.authReducer);
 
-  React.useEffect(() => {
-    if (authCookie !== "auth_cache") {
-      dispatch(getMeAsyncThunk())
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (authCookie !== "auth_cache") {
+  //     dispatch(getMeAsyncThunk())
+  //   }
+  // }, [])
 
 
-  React.useEffect(() => {
-    if (authLoading === "fulfilled" && authError) {
-      navigate("/login")
-    }
-  }, [authError]);
+  // React.useEffect(() => {
+  //   if (authLoading === "fulfilled" && authError) {
+  //     navigate("/login")
+  //   }
+  // }, [authError]);
 
   const handleClickOnTab = (pathname: string) => {
     navigate(pathname)

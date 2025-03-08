@@ -1,8 +1,17 @@
-﻿// import React from 'react';
-import {Outlet} from "react-router-dom";
+﻿import {Navigate, Outlet} from "react-router-dom";
 import {SideBar} from "../../../components/SideBar";
+import {appUseSeletor} from "../../../redux/redux-hooks.ts";
+
+
 
 export const Layout = () => {
+  const {status: authStatus} = appUseSeletor(state => state.authReducer)
+
+
+  if (authStatus !== 'getme') {
+    return <Navigate to={"/login"} replace/>
+  }
+  
   return (
     <>
       <div className="hidden sm:flex mt-5">
