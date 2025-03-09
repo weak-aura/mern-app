@@ -31,7 +31,7 @@ export const Login = () => {
     dispatch(loginAsyncThunk(user))
     setIsFormSubmitted(true);
   }
-
+  
   React.useEffect(() => {
     if (authStatus === "login") {
       navigate("/")
@@ -47,7 +47,7 @@ export const Login = () => {
       setIsFormSubmitted(false)
     }
   }, [authLoading, authError, authMessage, isFormSubmitted]);
-
+  
   React.useEffect(() => {
     if (authCookie !== "invalid_auth_cache") {
       dispatch(getMeAsyncThunk())
