@@ -21,25 +21,25 @@ export const Navigation = () => {
     {
       id: 0,
       path: "/",
-      label: "Home",
+      label: "Главная",
       icon: <IoHome/>,
     },
     {
       id: 1,
       path: !id ? "/posts/" : `/posts/${id}`,
-      label: "Posts",
+      label: "Публикаций",
       icon: <TiThList/>,
     },
     {
       id: 2,
       path: "/posts/create",
-      label: "Create",
+      label: "Создать",
       icon: <FaPenSquare/>,
     },
     {
       id: 3,
       path: `/profile`,
-      label: "Profile",
+      label: "Профиль",
       icon: <ImUser/>,
     },
   ]

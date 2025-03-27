@@ -3,21 +3,21 @@
 }
 
 .overlay {
-  @apply fixed top-0 left-0 w-full h-full border border-red-600 bg-black/70 flex justify-center items-center;
+  @apply fixed top-0 left-0 w-full h-full bg-black/70 flex justify-center items-center;
 }
 
 .modal_frame {
-  @apply p-4 w-[80vw] h-[12vh] bg-gray-700 rounded-lg;
+  @apply p-4 w-[80%] h-[15%] bg-gray-700 rounded-lg;
   
   h1{
-    @apply text-center mb-5;
+    @apply text-center mb-5 select-none;
   }
   
   ul {
     @apply flex justify-around;
     
     li{
-      @apply border px-2 rounded-md text-xl cursor-pointer;
+      @apply border px-2 rounded-md text-xl cursor-pointer select-none;
     }
   }
 }
