@@ -34,7 +34,7 @@ export const PostCardSkeleton = ({cards}: PostCardSkeletonProps) => {
         </div>
         {/*MOBILE_MEDIA*/}
         <div className={"block sm:hidden"}>
-          <div className="border rounded-lg border-[#343E4D] h-[240px] w-full overflow-hidden" key={i}>
+          <div className="-z-10 border rounded-lg border-[#343E4D] h-[240px] w-full overflow-hidden" key={i}>
             {/*img*/}
             <div>
               <Skeleton className="h-[110px] translate-y-[-4px]"/>
