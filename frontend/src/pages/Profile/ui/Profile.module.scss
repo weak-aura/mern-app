@@ -1,0 +1,24 @@
+﻿.user_picture {
+  @apply w-[77px] h-[77px] rounded-full border overflow-hidden;
+}
+
+.overlay {
+  @apply fixed top-0 left-0 w-full h-full border border-red-600 bg-black/70 flex justify-center items-center;
+}
+
+.modal_frame {
+  @apply p-4 w-[80vw] h-[12vh] bg-gray-700 rounded-lg;
+  
+  h1{
+    @apply text-center mb-5;
+  }
+  
+  ul {
+    @apply flex justify-around;
+    
+    li{
+      @apply border px-2 rounded-md text-xl cursor-pointer;
+    }
+  }
+}
+

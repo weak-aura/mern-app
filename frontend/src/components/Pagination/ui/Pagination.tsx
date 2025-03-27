@@ -18,7 +18,7 @@ export const Pagination = (
 
 
   return (
-    <nav aria-label="Page navigation example" className="mt-7">
+    <nav aria-label="Page navigation example" className="mt-5">
       <ul className="flex items-center -space-x-px h-10 text-base">
 
         <button onClick={() => handlePageChange(currentPage - 1)}

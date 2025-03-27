@@ -50,9 +50,9 @@ export const AllPosts = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <div
-        className="h-[786px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll overflow-x-hidden lg:overflow-hidden">
+    <div className="container mx-auto mb-[120px]">
+
+      <div className="grid grid-cols-2 grid-rows-3 sm:grid-rows-2 lg:grid-cols-3 gap-4">
         {postLoading === "pending" && <PostCardSkeleton cards={6}/>}
         {postLoading === "fulfilled" && currentPosts.length === 0 && (<h1>Постов нет</h1>)}
         {postLoading === "fulfilled" && currentPosts?.map((el) => (
@@ -60,8 +60,8 @@ export const AllPosts = () => {
             <PostCard {...el} />
           </div>
         ))}
-
       </div>
+
       <Pagination handlePageChange={handlePageChange}
                   indexOfLastPost={indexOfLastPost}
                   indexOfFirstPost={indexOfFirstPost}

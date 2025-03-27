@@ -22,6 +22,7 @@ import {RecoverPasswordReset} from "./pages/auth/RecoverPasswordReset";
 import {AllPosts} from "./pages/posts/AllPosts";
 import {OnePost} from "./pages/posts/OnePost";
 import {CreatePost} from "./pages/posts/CreatePost";
+import {Profile} from "./pages/Profile";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path={"/"} element={<Main/>}>
@@ -30,6 +31,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path={"/posts"} element={<AllPosts/>}/>
       <Route path={"/posts/:id"} element={<OnePost/>}/>
       <Route path={"/posts/create"} element={<CreatePost/>}/>
+      <Route path={"/profile"} element={<Profile/>}/>
     </Route>
     <Route>
       <Route path={"/login"} element={<Login/>}/>

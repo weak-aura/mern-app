@@ -2,7 +2,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   word-break: break-word; 
 }
@@ -11,7 +11,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-break: break-word; 
 }
@@ -22,4 +22,42 @@
 
 .popup_button {
   @apply w-full px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white;
+}
+
+// mobile media
+
+.mob_card_root {
+  @apply w-full h-[240px] border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg overflow-hidden flex flex-col;
+}
+
+.mob_card_root img {
+  @apply object-cover max-h-[120px] w-full;
+}
+
+.mob_info_root {
+  @apply px-2 flex-1 flex flex-col;
+}
+
+.mob_title {
+  @apply text-base/5 font-semibold tracking-tight text-gray-900 dark:text-white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+.mob_description {
+  @apply text-sm/5 flex-shrink text-gray-700 dark:text-gray-400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+.mob_author {
+  @apply pb-1 px-2 text-xs text-end text-gray-500 font-mono;
 }

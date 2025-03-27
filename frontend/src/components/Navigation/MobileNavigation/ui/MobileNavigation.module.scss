@@ -1,0 +1,7 @@
+.indicator {
+  @apply absolute -top-[40%] w-[70px] h-[70px] bg-[--test-color] rounded-full border-4 border-[--primary-bg];
+}
+
+.icon {
+  @apply duration-300 text-[40px];
+}

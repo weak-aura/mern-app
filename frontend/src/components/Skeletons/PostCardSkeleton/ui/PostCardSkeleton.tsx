@@ -8,7 +8,7 @@ interface PostCardSkeletonProps {
 export const PostCardSkeleton = ({cards} :PostCardSkeletonProps) => {
   return (
     Array(cards).fill(0).map((_,i) => (
-      <div className="border rounded-lg border-[#343E4D] min-h-[385px]  min-w-screen" key={i}>
+      <div className="-z-10 border rounded-lg border-[#343E4D] min-h-[385px]  min-w-screen" key={i}>
         <div>
           <Skeleton className="h-[140px]"/>
         </div>

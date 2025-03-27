@@ -1,7 +1,13 @@
 ﻿backend/node_modules
 frontend/node_modules
+
+# env
 backend/.env
 frontend/.env
 
+# preview
+frontend/dist
+
+# others
 .idea
 
