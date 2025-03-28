@@ -22,7 +22,7 @@ export const MobileNavigation = ({activeIndex, setActiveIndex, tabs} : MobileNav
 
   return (
     <div className={"flex justify-center"}>
-      <div className="fixed bottom-0 w-full bg-[--sidebar-bg]">
+      <div className="fixed bottom-0 w-full bg-[--sidebar-bg] z-10">
         {/* NAVIGATION */}
         <ul className={"relative mx-auto max-w-[340px] justify-between flex px-2"}>
           {tabs.map((el) => (
