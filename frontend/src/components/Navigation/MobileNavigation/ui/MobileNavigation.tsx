@@ -1,22 +1,23 @@
-﻿import React from "react";
+﻿// import React from "react";
 import {useNavigate} from "react-router-dom";
 import {motion} from "framer-motion";
 import styles from "./MobileNavigation.module.scss"
 import {mountAnim, translateX} from "./../../motionAnim.ts";
 import {TabsProps} from "../../ui/Navigation.tsx";
+import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
+import {setCurrentNavigatorIndex} from "../../../../redux/features/slices/navigationSlice.ts";
 
 interface MobileNavigationProps {
-  activeIndex: number
-  setActiveIndex:  React.Dispatch<React.SetStateAction<number>>
   tabs: TabsProps[]
 }
 
-export const MobileNavigation = ({activeIndex, setActiveIndex, tabs} : MobileNavigationProps) => {
- 
+export const MobileNavigation = ({ tabs} : MobileNavigationProps) => {
+  const dispatch = appUseDispatch();
   const navigate = useNavigate();
+  const {currentNavigatorIndex} = appUseSeletor(state => state.navigationReducer)
 
   const handleSubmit = (el: TabsProps) => {
-    setActiveIndex(el.id)
+    dispatch(setCurrentNavigatorIndex(el.id))
     navigate(el.path)
   }
 
@@ -33,7 +34,7 @@ export const MobileNavigation = ({activeIndex, setActiveIndex, tabs} : MobileNav
               <div className={"w-[70px] h-[70px]"}>
                 <div className={"flex justify-center"}>
                   <span
-                    className={`${activeIndex === el.id ? "-translate-y-[33%]" : "translate-y-[30%]"} ${styles.icon}`}>{el.icon}</span>
+                    className={`${currentNavigatorIndex === el.id ? "-translate-y-[33%]" : "translate-y-[30%]"} ${styles.icon}`}>{el.icon}</span>
                 </div>
               </div>
             </li>
@@ -42,7 +43,7 @@ export const MobileNavigation = ({activeIndex, setActiveIndex, tabs} : MobileNav
           <motion.span className={styles.indicator}
                        variants={translateX}
                        {...mountAnim}
-                       custom={activeIndex}
+                       custom={currentNavigatorIndex}
           />
         </ul>
       </div>

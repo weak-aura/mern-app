@@ -10,7 +10,7 @@
 }
 
 .root {
-  @apply fixed top-5 w-[260px] bg-[--sidebar-bg] h-[500px] rounded-2xl py-5 pl-5;
+  @apply fixed top-5 w-[260px] bg-[--sidebar-bg] h-[96vh] rounded-2xl py-5 pl-5;
   
   ul {
     @apply relative;

@@ -11,8 +11,8 @@ const generateUserToken = (payload, res) => {
 }
 
 const generateEmailCodeToken = (payload, res) => {
-  const token = jwt.sign({payload}, process.env.JWT_TOKEN_SECRET, {expiresIn: "2m"})
-  res.cookie("email_code_cache", token, {maxAge: 120000, httpOnly: true, sameSite: "none", secure: true})
+  const token = jwt.sign({payload}, process.env.JWT_TOKEN_SECRET, {expiresIn: "3m"})
+  res.cookie("email_code_cache", token, {maxAge: 160000, httpOnly: true, sameSite: "none", secure: true})
 }
 
 const generateAccessEmailToken = (payload, res) => {

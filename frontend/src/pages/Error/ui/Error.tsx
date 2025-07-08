@@ -1,5 +1,5 @@
 ﻿import {Link} from "react-router-dom";
-import {Button} from "../../../components/buttons/Button";
+import {Button} from "../../../components/ButtonSkins/Button";
 
 export const Error = () => {
   return (

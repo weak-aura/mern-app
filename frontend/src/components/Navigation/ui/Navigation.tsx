@@ -6,6 +6,8 @@ import {IoHome} from "react-icons/io5";
 import {TiThList} from "react-icons/ti";
 import {FaPenSquare} from "react-icons/fa";
 import {ImUser} from "react-icons/im";
+import {appUseDispatch, appUseSeletor} from "../../../redux/redux-hooks.ts";
+import {setCurrentNavigatorIndex} from "../../../redux/features/slices/navigationSlice.ts";
 
 export interface TabsProps {
   id: number
@@ -15,8 +17,12 @@ export interface TabsProps {
 }
 
 export const Navigation = () => {
+  const dispatch = appUseDispatch();
   const {id} = useParams();
-  const location = useLocation()
+  const location = useLocation();
+  const {currentPathname} = appUseSeletor(state => state.navigationReducer);
+  const {status: authStatus} = appUseSeletor(state => state.authReducer)
+
   const tabs: TabsProps[] = [
     {
       id: 0,
@@ -38,22 +44,26 @@ export const Navigation = () => {
     },
     {
       id: 3,
-      path: `/profile`,
+      path:  authStatus === "getme" ? "/profile" : `/profile/${currentPathname}`,
       label: "Профиль",
       icon: <ImUser/>,
     },
   ]
-
+  
   const currentIndex = tabs.findIndex(el => el.path === location.pathname);
-  const [activeIndex, setActiveIndex] = React.useState(currentIndex)
 
+  // Делает перерисовку для текущих индексов после обновления страницы
+  React.useEffect(() => {
+    dispatch(setCurrentNavigatorIndex(currentIndex))
+  }, [location])
+  
   return (
     <div>
       <div className="hidden sm:block">
-        <DesktopNavigation setActiveIndex={setActiveIndex} activeIndex={activeIndex} tabs={tabs}/>
+        <DesktopNavigation tabs={tabs}/>
       </div>
       <div className="block sm:hidden">
-        <MobileNavigation setActiveIndex={setActiveIndex} activeIndex={activeIndex} tabs={tabs}/>
+        <MobileNavigation tabs={tabs}/>
       </div>
     </div>
   );

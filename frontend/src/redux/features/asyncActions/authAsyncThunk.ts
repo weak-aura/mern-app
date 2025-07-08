@@ -25,7 +25,7 @@ export const registerAsyncThunk = createAsyncThunk("/registerAsyncThunk",
     }
   })
 
-export const verificationAsyncThunk = createAsyncThunk("/verificationAsynkThunk",
+export const verificationAsyncThunk = createAsyncThunk("/verificationAsyncThunk",
   async (payload: UserDataTypes) => {
     try {
       return await fetch(`${SERVER_URL}/api/auth/verification`, {

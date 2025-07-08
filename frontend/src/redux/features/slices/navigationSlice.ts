@@ -1,18 +1,22 @@
 ﻿import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-  navIndex: 0
+  currentNavigatorIndex: 0,
+  currentPathname: "",
 }
 
 const navigationSlice = createSlice({
   name: "navigation",
   initialState,
   reducers: {
-    setActiveIndex: (state, action) => {
-      state.navIndex = action.payload;
-    }
+    setCurrentNavigatorIndex: (state, action) => {
+      state.currentNavigatorIndex = action.payload;
+    },
+    setCurrentPathname: (state, action) => {
+      state.currentPathname = action.payload;
+    },
   }
 })
 
-export const {setActiveIndex} = navigationSlice.actions;
+export const {setCurrentNavigatorIndex, setCurrentPathname} = navigationSlice.actions;
 export default navigationSlice.reducer;

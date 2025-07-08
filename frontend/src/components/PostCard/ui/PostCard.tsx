@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import {Button} from "../../buttons/Button";
+import {Button} from "../../ButtonSkins/Button";
 import {Post, setIsPostIdSubmitted} from "../../../redux/features/slices/postSlice.ts";
 import styles from "./PostCard.module.scss";
 import {appUseDispatch, appUseSeletor} from "../../../redux/redux-hooks.ts";

@@ -6,14 +6,14 @@ const emailValidation = async (req, res, next) => {
     const emailCodeToken = req.cookies.email_code_cache
     const userToken = req.cookies.user_cache
     if (!userToken) {
-      return res.status(403).json({error: "Уважаемый пользователь, время выполнения проверки вашего кода превысило установленный лимит в 3 минуты. В целях безопасности, пожалуйста, повторите попытку регистрации."})
+      return res.status(403).json({error: "Время проверки кода превысило 5 минут, начните регистрцию заново.", cookie: "user_cache_expired"})
     }
     if (!emailCodeToken) {
       return res.status(403).json({error: "Время действия кода истек, отправьте код повторно"})
     }
 
-    const decodedEmailCodeToken = jwt.verify(emailCodeToken, process.env.JWT_TOKEN_SECRET)
     const decodedUserToken = jwt.verify(userToken, process.env.JWT_TOKEN_SECRET)
+    const decodedEmailCodeToken = jwt.verify(emailCodeToken, process.env.JWT_TOKEN_SECRET)
 
     req.user = decodedUserToken.payload;
     req.code = decodedEmailCodeToken.payload;

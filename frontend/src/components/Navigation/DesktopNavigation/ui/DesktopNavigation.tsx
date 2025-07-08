@@ -1,45 +1,24 @@
-﻿import React from 'react';
+﻿// import React from 'react';
 import styles from "./DesktopNavigation.module.scss";
 import {motion} from "framer-motion";
 import {useNavigate} from "react-router-dom";
-import {getMeAsyncThunk} from "../../../../redux/features/asyncActions/authAsyncThunk.ts";
 import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
 import {mountAnim, translateY} from "../../motionAnim.ts";
 import {TabsProps} from "../../ui/Navigation.tsx";
 import {MernLogo} from "../../../MernLogo";
+import {setCurrentNavigatorIndex} from "../../../../redux/features/slices/navigationSlice.ts";
 
 interface DesktopNavigationProps {
-  activeIndex: number
-  setActiveIndex:  React.Dispatch<React.SetStateAction<number>>
   tabs: TabsProps[]
 }
 
-export const DesktopNavigation = ({activeIndex, setActiveIndex, tabs} :DesktopNavigationProps) => {
-  
-  const navigate = useNavigate();
+export const DesktopNavigation = ({ tabs}: DesktopNavigationProps) => {
   const dispatch = appUseDispatch()
-
-  const {cookie: authCookie} = appUseSeletor(state => state.authReducer);
-  const {
-    loading: authLoading,
-    error: authError,
-  } = appUseSeletor(state => state.authReducer);
-
-  React.useEffect(() => {
-    if (authCookie !== "auth_cache") {
-      dispatch(getMeAsyncThunk())
-    }
-  }, [])
-
-
-  React.useEffect(() => {
-    if (authLoading === "fulfilled" && authError) {
-      navigate("/login")
-    }
-  }, [authError]);
+  const navigate = useNavigate();
+  const {currentNavigatorIndex} = appUseSeletor(state => state.navigationReducer)
 
   const handleSubmit = (el: TabsProps) => {
-    setActiveIndex(el.id)
+    dispatch(setCurrentNavigatorIndex(el.id)) 
     navigate(el.path)
   }
 
@@ -61,7 +40,7 @@ export const DesktopNavigation = ({activeIndex, setActiveIndex, tabs} :DesktopNa
         <motion.div className={styles.navigator}
                     variants={translateY}
                     {...mountAnim}
-                    custom={activeIndex}
+                    custom={currentNavigatorIndex}
         >
           <motion.span className={styles.rigid_border_top}/>
           <motion.span className={styles.rigid_border_bottom}/>

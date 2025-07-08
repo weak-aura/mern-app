@@ -1,26 +1,28 @@
 :root {
-  font-family: "Noto Sans Display", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-  
-  --test-color: #37C39E;
-  /*buttons*/
-  --btn-color: #5D52D9;
-  --btn-outline-color: #62EFBD;
-  /*main vars*/
-  --primary-bg: #282743;
-  --sidebar-bg: #3D366A;
+    font-family: "Noto Sans Display", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: var(--primary-bg);
+    --test-color: #37C39E;
+    /*buttons*/
+    --btn-color: #5D52D9;
+    --btn-outline-color: #62EFBD;
+    /*main vars*/
+    --primary-bg: #282743;
+    --sidebar-bg: #3D366A;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: var(--primary-bg);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+
 }
 
 @tailwind base;
@@ -28,7 +30,15 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    box-sizing: border-box;
-  }
+    body {
+        box-sizing: border-box;
+    }
+}
+
+.hide-password-reveal::-ms-reveal {
+    display: none;
+}
+
+.hide-password-reveal::-ms-clear {
+    display: none;
 }

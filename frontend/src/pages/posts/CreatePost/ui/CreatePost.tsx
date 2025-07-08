@@ -1,10 +1,9 @@
 ﻿import React from 'react';
-import {Button} from "../../../../components/buttons/Button";
 import styles from "./CreatePost.module.scss";
 import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
 import {createPostAsyncThunk} from "../../../../redux/features/asyncActions/postAsyncThunk.ts";
 import {toast} from "react-hot-toast";
-import {Spinner} from "../../../../components/Spinner";
+import {Button} from "../../../../components/ButtonSkins/Button";
 
 export const CreatePost = () => {
   const [title, setTitle] = React.useState('');
@@ -102,7 +101,7 @@ export const CreatePost = () => {
 
       </div>
       <br/>
-      <Button className={`w-[85px] ${loading === "pending" ? "pointer-events-none cursor-default" : ""}`} type={"submit"}>{loading === "pending" ? (<Spinner/>) : "Создать"}</Button>
+      <Button className={`w-[85px] ${loading === "pending" ? "pointer-events-none cursor-default" : ""}`} type={"submit"}>{loading === "pending" ? (<h1>Loading...</h1>) : "Создать"}</Button>
     </form>
   );
 };

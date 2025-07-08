@@ -17,7 +17,7 @@ const register = async (req, res) => {
     if (userExists) {
       return res.status(401).json({error: "Пользователь с такой почтой уже существует"})
     } else if (username.length < 4) {
-      return res.status(401).json({error: "Имя пользователя должна быть не менее 4 букв"})
+      return res.status(401).json({error: "Имя пользователя должен быть не менее 4 букв"})
     } else if (password.length < 6) {
       return res.status(401).json({error: "Пароль должен быть не менее 6 символов"})
     }
@@ -38,8 +38,8 @@ const register = async (req, res) => {
       generateEmailCodeToken(generateCode, res)
       await initiateUserEmailVerification(email, generateCode)
       res.status(201).json({
-        message: `Код для верификаций отправлен на почту: ${email}, время действия кода 30 секунд`,
-        status: "register"
+        message: `Код для верификаций отправлен на почту: ${email}, время действия кода 3 минуты`,
+        status: "register",
       })
     }
 
@@ -68,7 +68,10 @@ const verification = async (req, res) => {
       })
     } else {
       await newUser.save();
-      res.status(201).json({message: "Регистрация прошла успешно", status: "verification",});
+      res.status(201).json({
+        message: "Регистрация прошла успешно", 
+        status: "verification"
+      });
     }
   } catch (error) {
     console.log("Error in verification: ", error.message)
@@ -84,7 +87,7 @@ const resendCode = async (req, res) => {
     await initiateUserEmailVerification(payload.email, generateCode);
     generateEmailCodeToken(generateCode, res);
 
-    res.status(201).json({message: `Код был отправлен повторно на почту ${payload.email}`, status: "resendCode"});
+    res.status(201).json({message: `Код был отправлен повторно на почту ${payload.email}`});
   } catch (error) {
     console.error("Error in resendCode:", error);
     res.status(500).json({error: "Resend Code Error"});
@@ -132,7 +135,7 @@ const getMe = async (req, res) => {
   try {
     const user = await UserModel.findById(req.userId).select("-password")
 
-    res.status(201).json({message: "Аутентификация прошла успешно", user, status: "getme", cookie: "auth_cache"})
+    res.status(201).json({user, status: "getme"})
   } catch (error) {
     console.log("Error in logout: ", error.message)
     res.status(500).json({error: "Internal Server Error"})
