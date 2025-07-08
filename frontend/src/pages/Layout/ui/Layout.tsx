@@ -1,22 +1,12 @@
 ﻿import {Outlet} from "react-router-dom";
 import {Navigation} from "../../../components/Navigation";
-import {appUseSeletor} from "../../../redux/redux-hooks.ts";
-import {MernLogo} from "../../../components/MernLogo";
 import {ProfileNavigation} from "../../../components/ProfileNavigation";
 // import React from "react";
 
 
 export const Layout = () => {
 
-  const {status: authStatus, loading: authLoading} = appUseSeletor(state => state.authReducer)
-
-  if (authStatus === null && authLoading === "pending") {
-    return (
-      <div className={"w-full h-[100vh] flex justify-center items-center"}>
-        <MernLogo size={35} font_size={"text-[35px]"}/>
-      </div>
-    )
-  }
+  
 
   return (
     <>

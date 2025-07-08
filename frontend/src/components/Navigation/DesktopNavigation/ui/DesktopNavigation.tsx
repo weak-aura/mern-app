@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 import {appUseDispatch, appUseSeletor} from "../../../../redux/redux-hooks.ts";
 import {mountAnim, translateY} from "../../motionAnim.ts";
 import {TabsProps} from "../../ui/Navigation.tsx";
-import {MernLogo} from "../../../MernLogo";
 import {setCurrentNavigatorIndex} from "../../../../redux/features/slices/navigationSlice.ts";
 
 interface DesktopNavigationProps {
@@ -24,7 +23,7 @@ export const DesktopNavigation = ({ tabs}: DesktopNavigationProps) => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.logo}><MernLogo/></div>
+      <div className={styles.logo}>Mern Logo</div>
       <ul>
         {tabs.map((el) => (
           <li key={el.id}
