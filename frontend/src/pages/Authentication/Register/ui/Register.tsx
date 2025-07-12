@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import styles from "./Register.module.scss";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {setCurrentPathname} from "../../../../redux/features/slices/navigationSlice.ts";
 import {setUserForm} from "../../../../redux/features/slices/authSlice.ts";
 import {
@@ -17,10 +17,12 @@ import {Spinner} from "../../../../components/Spinner";
 import Cookies from "js-cookie";
 
 export const Register = () => {
+  const navigate = useNavigate();
   const dispatch = appUseDispatch();
   const {
     loading: authLoading,
     userForm: authUserForm,
+    status: authStatus
   } = appUseSeletor(state => state.authReducer);
   const [showPassword, setShowPassword] = React.useState(false)
   const [password, setPassword] = React.useState<string | undefined>("")
@@ -76,6 +78,12 @@ export const Register = () => {
     setShowPassword(!showPassword)
   }
 
+  React.useEffect(() => {
+    if(authStatus === "getme") {
+      navigate("/profile")
+    }
+  },[authStatus])
+
   return (
     <section className={styles.section}>
       <div className={styles.frame}>
@@ -100,6 +108,7 @@ export const Register = () => {
             <div>
               <label className={styles.label}>Введите имя</label>
               <input type="text"
+                     placeholder="Введите имя пользователя"
                      disabled={newUserCache === "new_user_cache"}
                      className={newUserCache === "new_user_cache" ? styles.form_submitted : styles.input}
                      ref={usernameRef}

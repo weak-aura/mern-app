@@ -2,7 +2,7 @@
 import styles from "../../../pages/Profile/ui/Profile.module.scss";
 import {appUseDispatch, appUseSeletor} from "../../../redux/redux-hooks.ts";
 import {getMeAsyncThunk, logoutAsyncThunk} from "../../../redux/features/asyncActions/authAsyncThunk.ts";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {setCurrentPathname} from "../../../redux/features/slices/navigationSlice.ts";
 import {setLogout} from "../../../redux/features/slices/authSlice.ts";
 
@@ -21,13 +21,11 @@ export const ProfileNavigation = () => {
     if (authStatus === "login") {
       dispatch(getMeAsyncThunk())
     }
-    if (authStatus === "logout") {
-      navigate("/profile/login")
-    }
   }, [authStatus])
 
   const handleAuthFormPage = (pathname: string) => {
     dispatch(setCurrentPathname(pathname))
+    navigate(`/profile/${pathname}`)
   }
 
   const handleLogout = () => {
@@ -35,19 +33,17 @@ export const ProfileNavigation = () => {
     dispatch(setLogout(logout))
     dispatch(logoutAsyncThunk())
   }
-  
+
   return (
     <div>
       <div className="w-full flex justify-end">
         {!user && (
           <ul className={"flex items-center bg-[--sidebar-bg] p-1 rounded-2xl"}>
             {nav.map((el) => (
-              <Link to={`/profile/${el.pathname}`} key={el.text}>
-                <li
-                  className={`${currentPathname === el.pathname && currentNavigatorIndex === 3 && styles.active} select-none cursor-pointer px-4 py-1`}
-                  onClick={() => handleAuthFormPage(el.pathname)}
-                >{el.text}</li>
-              </Link>
+              <li key={el.pathname}
+                className={`${currentPathname === el.pathname && currentNavigatorIndex === 3 && styles.active} select-none cursor-pointer px-4 py-1`}
+                onClick={() => handleAuthFormPage(el.pathname)}
+              >{el.text}</li>
             ))}
           </ul>
         )}

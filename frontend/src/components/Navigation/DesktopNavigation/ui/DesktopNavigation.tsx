@@ -20,7 +20,7 @@ export const DesktopNavigation = ({ tabs}: DesktopNavigationProps) => {
     dispatch(setCurrentNavigatorIndex(el.id)) 
     navigate(el.path)
   }
-
+  
   return (
     <div className={styles.root}>
       <div className={styles.logo}>Mern Logo</div>

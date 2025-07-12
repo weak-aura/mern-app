@@ -16,6 +16,8 @@ const register = async (req, res) => {
     const userExists = await UserModel.findOne({email})
     if (userExists) {
       return res.status(401).json({error: "Пользователь с такой почтой уже существует"})
+    } else if (email.length < 1) {
+      return res.status(401).json({error: "Введите название почты"})
     } else if (username.length < 4) {
       return res.status(401).json({error: "Имя пользователя должен быть не менее 4 букв"})
     } else if (password.length < 6) {

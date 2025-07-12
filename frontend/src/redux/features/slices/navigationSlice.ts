@@ -10,7 +10,11 @@ const navigationSlice = createSlice({
   initialState,
   reducers: {
     setCurrentNavigatorIndex: (state, action) => {
-      state.currentNavigatorIndex = action.payload;
+      if (action.payload < 0) {
+        state.currentNavigatorIndex = 3
+      } else {
+        state.currentNavigatorIndex = action.payload
+      }
     },
     setCurrentPathname: (state, action) => {
       state.currentPathname = action.payload;

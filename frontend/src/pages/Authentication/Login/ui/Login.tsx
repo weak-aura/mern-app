@@ -5,32 +5,46 @@ import {loginAsyncThunk} from "../../../../redux/features/asyncActions/authAsync
 import {Link, useNavigate} from "react-router-dom";
 import {setCurrentPathname} from "../../../../redux/features/slices/navigationSlice.ts";
 import {Button} from "../../../../components/ButtonSkins/Button";
+import {Spinner} from "../../../../components/Spinner";
+import {LuEye, LuEyeClosed} from "react-icons/lu";
 
 export const Login = () => {
   const dispatch = appUseDispatch();
   const navigate = useNavigate();
-  const {status: authStatus} = appUseSeletor(state => state.authReducer);
+  const {
+    status: authStatus,
+    loading: authLoading
+  } = appUseSeletor(state => state.authReducer);
   const emailRef = React.useRef<HTMLInputElement | null>(null);
-  const passwordRef = React.useRef<HTMLInputElement | null>(null);
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [password, setPassword] = React.useState<string | undefined>("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const user = {
       email: emailRef.current?.value,
-      password: passwordRef.current?.value
+      password: password
     }
     dispatch(loginAsyncThunk(user))
   }
   
-  React.useEffect(() => {
-    if (authStatus === "getme") {
-      navigate("/profile")
-    }
-  }, [authStatus])
-
   const handleAuthFormPage = (pathname: string) => {
     dispatch(setCurrentPathname(pathname))
   }
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+  }
+  
+  React.useEffect(() => {
+    if(authStatus === "getme") {
+      navigate("/profile")
+    }
+  },[authStatus])
 
   return (
     <section className={styles.section}>
@@ -52,12 +66,23 @@ export const Login = () => {
             {/*----------------------------------------------------------------------------------------------Password*/}
             <div>
               <label className={styles.label}>Пароль</label>
-              <input type="password"
-                     name="password"
-                     placeholder="••••••••"
-                     className={styles.input}
-                     ref={passwordRef}
-              />
+              <div className={"relative"}>
+                <input type={showPassword ? "text" : "password"}
+                       placeholder="Введите свой пароль"
+                       className={`${styles.input} hide-password-reveal`}
+                       value={password}
+                       onChange={handlePasswordChange}
+                />
+                {!showPassword ? (
+                  <LuEyeClosed className={`${styles.eye_icon} ${password?.length === 0 ? "hidden" : "block"}`}
+                               onClick={handleTogglePasswordVisibility}
+                  />
+                ) : (
+                  <LuEye className={`${styles.eye_icon} ${password?.length === 0 ? "hidden" : "block"}`}
+                         onClick={handleTogglePasswordVisibility}
+                  />
+                )}
+              </div>
             </div>
             {/*------------------------------------------------------------------------------Link to Recover Password*/}
             <div className="flex justify-end">
@@ -71,7 +96,9 @@ export const Login = () => {
             <Button type="submit"
                     className={styles.btn}
                     onClick={handleSubmit}
-            >Войти
+            >{authLoading === "pending" ? (
+              <div className={"flex gap-2 justify-center items-center"}>Загрузка...<Spinner/></div>) : (
+              <p>Отправить</p>)}
             </Button>
 
             {/*--------------------------------------------------------------------------------------Link to Register*/}

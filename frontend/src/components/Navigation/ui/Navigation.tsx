@@ -21,7 +21,8 @@ export const Navigation = () => {
   const {id} = useParams();
   const location = useLocation();
   const {currentPathname} = appUseSeletor(state => state.navigationReducer);
-  const {status: authStatus} = appUseSeletor(state => state.authReducer)
+  // const {status: authStatus} = appUseSeletor(state => state.authReducer);
+
 
   const tabs: TabsProps[] = [
     {
@@ -44,7 +45,7 @@ export const Navigation = () => {
     },
     {
       id: 3,
-      path:  authStatus === "getme" ? "/profile" : `/profile/${currentPathname}`,
+      path: `/profile/${currentPathname}`,
       label: "Профиль",
       icon: <ImUser/>,
     },
@@ -56,6 +57,7 @@ export const Navigation = () => {
   React.useEffect(() => {
     dispatch(setCurrentNavigatorIndex(currentIndex))
   }, [location])
+  
   
   return (
     <div>
